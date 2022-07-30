@@ -8,7 +8,6 @@ from pydantic import BaseModel
 app = FastAPI()
 
 
-@dataclass
 class Item(BaseModel):
     name: str
     price: float
@@ -25,13 +24,7 @@ def about():
     return {"message": "About page"}
 
 
-inventory = {
-    1: {"name": "banana", "price": 1.00, "brand": "organic"},
-    2: {"name": "apple", "price": 2.00, "brand": "organic"},
-    3: {"name": "orange", "price": 3.00, "brand": "organic"},
-    4: {"name": "pear", "price": 4.00, "brand": "organic"},
-    5: {"name": "grape", "price": 5.00, "brand": "organic"},
-}
+inventory = {}
 
 
 @app.get("/get-item/{item_id}")
@@ -46,7 +39,7 @@ def get_item(item_id: int = Path(None, description="The item's id", gt=0)):
 def get_by_name(*, item_id: int, name: Optional[str] = None, version: int):
     if version:
         for item_id in inventory:
-            if inventory[item_id]["name"] == name:
+            if inventory[item_id].name == name:
                 return inventory[item_id]
     return {"message": "Item not found"}
 
@@ -56,5 +49,5 @@ def create_item(item_id: int, item: Item):
     if item_id in inventory:
         return {"message": "Item already exists"}
     else:
-        inventory[item_id] = {"name": item.name, "price": item.price, "brand": item.brand}
+        inventory[item_id] = item
         return inventory[item_id]
