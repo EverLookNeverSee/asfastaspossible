@@ -32,9 +32,10 @@ def get_item(item_id: int = Path(None, description="The item's id", gt=0)):
         return {"message": "Item not found"}
 
 
-@app.get("/get-by-name")
-def get_by_name(name: Optional[str] = None):
-    for item_id in inventory:
-        if inventory[item_id]["name"] == name:
-            return inventory[item_id]
+@app.get("/get-by-name/{item_id}")
+def get_by_name(*, item_id: int, name: Optional[str] = None, version: int):
+    if version:
+        for item_id in inventory:
+            if inventory[item_id]["name"] == name:
+                return inventory[item_id]
     return {"message": "Item not found"}
