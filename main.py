@@ -1,8 +1,18 @@
+from dataclasses import dataclass
 from fastapi import FastAPI, Response, Path
 from typing import Optional
+from pydantic import BaseModel
+
 
 # Defining the api object
 app = FastAPI()
+
+
+@dataclass
+class Item(BaseModel):
+    name: str
+    price: float
+    brand: Optional[str] = None
 
 
 @app.get("/")
