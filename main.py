@@ -14,6 +14,12 @@ class Item(BaseModel):
     brand: Optional[str] = None
 
 
+class UpdateItem(BaseModel):
+    name: Optional[str] = None
+    price: Optional[float] = None
+    brand: Optional[str] = None
+
+
 @app.get("/")
 def root():
     return Response(status_code=200, content="The server is running.")
