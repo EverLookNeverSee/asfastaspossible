@@ -21,3 +21,11 @@ inventory = {
     4: {"name": "pear", "price": "$4.00"},
     5: {"name": "grape", "price": "$5.00"},
 }
+
+
+@app.get("/get-item/{item_id}")
+def get_item(item_id: int):
+    if item_id in inventory:
+        return inventory[item_id]
+    else:
+        return {"message": "Item not found"}
