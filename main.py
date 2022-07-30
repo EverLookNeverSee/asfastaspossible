@@ -49,3 +49,12 @@ def get_by_name(*, item_id: int, name: Optional[str] = None, version: int):
             if inventory[item_id]["name"] == name:
                 return inventory[item_id]
     return {"message": "Item not found"}
+
+
+@app.post("/create-item/{item_id}")
+def create_item(item_id: int, item: Item):
+    if item_id in inventory:
+        return {"message": "Item already exists"}
+    else:
+        inventory[item_id] = {"name": item.name, "price": item.price, "brand": item.brand}
+        return inventory[item_id]
