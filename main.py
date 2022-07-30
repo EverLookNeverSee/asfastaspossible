@@ -29,3 +29,11 @@ def get_item(item_id: int = Path(None, description="The item's id", gt=0)):
         return inventory[item_id]
     else:
         return {"message": "Item not found"}
+
+
+@app.get("/get-by-name")
+def get_by_name(name: str):
+    for item_id in inventory:
+        if inventory[item_id]["name"] == name:
+            return inventory[item_id]
+    return {"message": "Item not found"}
