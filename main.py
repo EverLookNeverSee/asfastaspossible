@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, Path
 
 # Defining the api object
 app = FastAPI()
@@ -24,7 +24,7 @@ inventory = {
 
 
 @app.get("/get-item/{item_id}")
-def get_item(item_id: int):
+def get_item(item_id: int = Path(None, description="The item's id", gt=0)):
     if item_id in inventory:
         return inventory[item_id]
     else:
