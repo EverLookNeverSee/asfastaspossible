@@ -7,3 +7,8 @@ app = FastAPI()
 @app.get("/")
 def root():
     return Response(status_code=200, content="The server is running.")
+
+
+@app.get("/about")
+def about():
+    return {"message": "About page"}
